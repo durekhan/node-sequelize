@@ -4,7 +4,9 @@ const jwtVerify = promise.promisify(require('jsonwebtoken').verify);
 const db = global.db;
 module.exports = () => {
   return async (req, res, next) => {
+    console.log("Middleware called");
     if (!req.headers.authorization) {
+      console.log("Failed auth");
       return res.status(400).send({msg: 'Authorization header missing'});
     } else {
       try {

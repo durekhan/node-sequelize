@@ -1,13 +1,12 @@
 const {Sequelize, Model, DataTypes} = require('sequelize');
 
-class Post extends Model {
+class Category extends Model {
   static associate(models) {
-    Post.belongsTo(models.Users);
-    Post.belongsToMany(models.Categories,{through:models.Postcategories,foreignKey:'postId',onDelete:'CASCADE'});
+    Category.belongsToMany(models.Posts,{through: models.Postcategories,foreignKey:"categoryId",onDelete:'CASCADE'});
   }
 }
 
-Post.init({
+Category.init({
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -17,17 +16,8 @@ Post.init({
     type: DataTypes.STRING,
     allowNull: false
   },
-  body: {
+  description: {
     type: DataTypes.STRING,
-    field: 'body'
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    field: 'user_id',
-    references: {
-      model: 'user',
-      field: 'id'
-    }
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -45,11 +35,11 @@ Post.init({
   defaultScope: {
     attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'deletedAt'] },
   },
-  modelName: 'post',
+  modelName: 'category',
   paranoid: true,
   underscored: true,
   freezeTableName: true,
   sequelize: global.sequelize
 });
 
-module.exports = Post;
+module.exports = Category;

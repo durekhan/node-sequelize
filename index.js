@@ -6,6 +6,7 @@ const path = require('path');
 let options, app;
 
 options = {
+
   onconfig: function (config, next) {
     next(null, config);
   }
@@ -14,7 +15,6 @@ options = {
 app = module.exports = express();
 
 app.use(express.static(__dirname + '/public'));
-
 global.db = require('./app/models/index');
 global.log = require('./app/lib/logger');
 global.appRoot = path.resolve(__dirname);
@@ -26,3 +26,10 @@ app.on('start', function () {
   global.log.info('Application ready to serve requests.');
   global.log.info('Environment: %s', app.kraken.get('env:env'));
 });
+// app.use((req,res,next)=>{
+//   res.status(404).json({error:"Invalid Request"});
+//   next(error);
+// });
+// app.use((error,req,res,next)=>{
+//   res.status(error.status||500).json({error:"Invalid Request"});
+// });

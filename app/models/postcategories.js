@@ -1,33 +1,37 @@
 const {Sequelize, Model, DataTypes} = require('sequelize');
 
-class Post extends Model {
+class Postcategory extends Model {
   static associate(models) {
-    Post.belongsTo(models.Users);
-    Post.belongsToMany(models.Categories,{through:models.Postcategories,foreignKey:'postId',onDelete:'CASCADE'});
+    Postcategory.belongsTo(models.Posts,{foreignKey:'postId'});
+    Postcategory.belongsTo(models.Categories,{foreignKey:'categoryId'});
   }
 }
 
-Post.init({
+Postcategory.init({
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
+    onDelete:'CASCADE',
     primaryKey: true,
   },
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  body: {
-    type: DataTypes.STRING,
-    field: 'body'
-  },
-  userId: {
+  postId:{
     type: DataTypes.INTEGER,
-    field: 'user_id',
+    field: 'post_id',
     references: {
-      model: 'user',
+      model: 'post',
       field: 'id'
-    }
+    },
+    onDelete:'CASCADE'
+
+  },
+  categoryId:{
+    type: DataTypes.INTEGER,
+    field: 'category_id',
+    references: {
+      model: 'category',
+      field: 'id'
+    },
+    onDelete:'CASCADE'
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -45,11 +49,11 @@ Post.init({
   defaultScope: {
     attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'deletedAt'] },
   },
-  modelName: 'post',
+  modelName: 'postcategory',
   paranoid: true,
   underscored: true,
   freezeTableName: true,
   sequelize: global.sequelize
 });
 
-module.exports = Post;
+module.exports = Postcategory;
