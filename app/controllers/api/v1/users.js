@@ -10,15 +10,8 @@ module.exports = (router) => {
         model: db.Posts,
       },
     ],offset:pageNo*parseInt(req.query.size),limit:parseInt(req.query.size)});
-    if(count===0)
-    {
-      res.json({ msg: "invalid offset or limit" });
-    }
-    else
-    {
       res.send({ posts: rows,
         page:req.query.page+"/"+Math.ceil((count) / parseInt(req.query.size))});
-    }
   });
   router.delete("/", async (req, res) => {
     const users = await db.Users.destroy({
@@ -66,11 +59,7 @@ module.exports = (router) => {
         id: req.user.id,
       },
     });
-    if (user) {
       res.json({ user: user, token: user.createAPIToken() });
-    } else {
-      res.status(400).json({ msg: "User not found" });
-    }
   });
 
   router.post("/signup", async (req, res) => {

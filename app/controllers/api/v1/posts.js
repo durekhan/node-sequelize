@@ -21,27 +21,7 @@ module.exports = (router) => {
     //const post = await db.Posts.create(req.body);
     res.json({ post: post });
   });
-  router.get("/userposts",async(req,res)=>{
-    const posts = await db.Posts.findAll(  
-      {
-        where:{
-          userId:req.query.id,
-        },
-        include: [
-          {
-            model: db.Users,
-            model:db.Categories
-          },
-        ],
-      });
-    if(posts.length===0)
-    {
-      res.json({msg:"No posts made yet!"});
-    }
-    else{
-    res.json({ posts: posts });
-    }
-  });
+  
   router.delete("/", async (req, res) => {
     const post = await db.Posts.destroy({
       where: {
@@ -49,8 +29,8 @@ module.exports = (router) => {
         userId: req.body.userId,
       },
     });
-    //console.log(post[0]);
-    if (post) {
+    
+    if (post===1) {
       res.status(200).json({msg:"deleted successfully!"});
     } else {
       res.status(400).json({msg:"Invalid id"});
@@ -84,15 +64,9 @@ module.exports = (router) => {
         ],
       }
     );
-    if(count===0)
-    {
-      res.json({msg:"No posts made yet!"});
-    }
-    else{
     res.send({ posts: rows,
       page:req.query.page+"/"+Math.ceil((count) / parseInt(req.query.size))
     });
-    }
   });
   router.use((req,res,next)=>{
     res.status(404);

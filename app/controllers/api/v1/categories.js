@@ -11,14 +11,8 @@ module.exports = (router) => {
   router.get("/",async (req,res)=>{
     const categories = await db.Categories.findAll(  
       {
-      });
-    if(categories.length===0)
-    {
-      res.json({msg:"No categories made yet!"});
-    }
-    else{
+      }); 
     res.json({ categories: categories });
-    }
   });
   router.put("/",async(req,res)=>{
     const categories = await db.Categories.update(req.body, {
@@ -33,6 +27,7 @@ module.exports = (router) => {
     }
   });
   router.delete("/",async(req,res)=>{
+    console.log("IN CONTROLLER "+req.body.id);
     const categories = await db.Categories.destroy({
       where: {
         id: req.body.id,

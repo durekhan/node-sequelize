@@ -1,0 +1,1 @@
+{"parent":null,"pid":7506,"argv":["/usr/bin/node","/usr/bin/npm","run","test"],"execArgv":[],"cwd":"/home/oem/Desktop/node-sequelize-demo","time":1636994080189,"ppid":7495,"coverageFilename":"/home/oem/Desktop/node-sequelize-demo/.nyc_output/ec1d11fa-705b-4619-b103-36e89190ca78.json","externalId":"","uuid":"ec1d11fa-705b-4619-b103-36e89190ca78","files":[]}
